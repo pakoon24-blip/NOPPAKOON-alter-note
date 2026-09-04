@@ -47,11 +47,6 @@ h2{font-size:28px;margin:0}
 }
 .notes button.active{border-color:#36bbb7;background:#effdfc}
 .instruction{text-align:center;font-size:21px;font-weight:700;margin:26px 0 18px}
-.drop{
-  min-height:128px;border:4px dashed #c1bed2;border-radius:28px;
-  display:flex;align-items:center;justify-content:center;
-  color:#8b8899;font-size:20px;background:#faf9ff;
-}
 .acc{display:flex;gap:16px;justify-content:center;margin-top:20px}
 .acc button{
   border:0;border-radius:25px;color:white;width:31%;min-height:120px;
@@ -81,7 +76,7 @@ h2{font-size:28px;margin:0}
   <section class="panel">
     <div class="panelhead">
       <h2>🎵 โหมดเรียนรู้</h2>
-      <div class="badge">ลากแล้วฟัง</div>
+      <div class="badge">ฟังแล้วเรียนรู้</div>
     </div>
     <div class="help">เลือกโน้ตตั้งต้น</div>
     <div class="note" id="bigNote">C</div>
@@ -97,13 +92,12 @@ h2{font-size:28px;margin:0}
       <button data-note="B">B</button>
     </div>
 
-    <div class="instruction">ลาก # ♭ หรือ ♮ ใส่ช่อง</div>
-    <div class="drop" id="drop">วางเครื่องหมายตรงนี้</div>
+    <div class="instruction">เลือกเครื่องหมายเพื่อทดลองเสียง</div>
 
     <div class="acc">
-      <button class="sharp" draggable="true" data-acc="#">#<small>ชาร์ป +½ เสียง</small></button>
-      <button class="flat" draggable="true" data-acc="b">♭<small>แฟลต −½ เสียง</small></button>
-      <button class="natural" draggable="true" data-acc="♮">♮<small>คืนเสียงเดิม</small></button>
+      <button class="sharp" data-acc="#">#<small>ชาร์ป +½ เสียง</small></button>
+      <button class="flat" data-acc="b">♭<small>แฟลต −½ เสียง</small></button>
+      <button class="natural" data-acc="♮">♮<small>คืนเสียงเดิม</small></button>
     </div>
 
     <div class="tip">
@@ -137,11 +131,8 @@ document.querySelectorAll(".notes button").forEach(b=>b.onclick=()=>{
   index=noteNames.indexOf(b.dataset.note); acc=""; render();
 });
 document.querySelectorAll(".acc button").forEach(b=>{
-  b.addEventListener("dragstart",e=>e.dataTransfer.setData("text/plain",b.dataset.acc));
-  b.onclick=()=>{acc=b.dataset.acc;render();};
+  b.onclick=()=>{acc=b.dataset.acc;render();play();};
 });
-drop.addEventListener("dragover",e=>e.preventDefault());
-drop.addEventListener("drop",e=>{e.preventDefault();acc=e.dataTransfer.getData("text/plain");render();});
 document.getElementById("prev").onclick=()=>{index=(index+6)%7;acc="";render()};
 document.getElementById("next").onclick=()=>{index=(index+1)%7;acc="";render()};
 
