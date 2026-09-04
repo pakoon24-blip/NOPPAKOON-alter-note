@@ -1,158 +1,165 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>ALTER NOTE • บทเรียน</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ALTER NOTE • โหมดเรียนรู้</title>
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:linear-gradient(145deg,#eee9ff,#dff8f4);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans Thai","Segoe UI",sans-serif;color:#292450}
-.app{max-width:430px;min-height:100vh;margin:auto;padding:14px 14px 34px}
-.hero{background:linear-gradient(145deg,#6658d8,#a38eea);color:#fff;border-radius:28px;padding:19px 17px;box-shadow:0 12px 30px #4b3c9b25}
-.logo{font-size:31px;font-weight:950;letter-spacing:-1.5px;text-align:center}.logo span{color:#7de7ff}.logo b{color:#ffd078}
-.sub{text-align:center;margin-top:4px;font-size:13px;font-weight:800}
-.scorebar{display:flex;gap:7px;margin-top:13px}.scorepill{flex:1;text-align:center;background:#ffffff22;border:1px solid #ffffff30;border-radius:15px;padding:7px 4px;font-size:11px}.scorepill b{display:block;font-size:20px}
-.progress{height:7px;background:#ffffff35;border-radius:99px;margin-top:12px;overflow:hidden}.progress i{display:block;height:100%;width:0;background:#fff;border-radius:99px;transition:.3s}
-.card{background:#fff;border-radius:25px;padding:16px;margin-top:13px;box-shadow:0 8px 25px #423a7b15}
-.title{display:flex;justify-content:space-between;align-items:center;font-weight:900}.badge{font-size:11px;background:#f0ecff;padding:6px 9px;border-radius:999px}
-.challenge{background:#fff8d8;border-radius:19px;padding:15px;margin-top:13px;text-align:center}
-.challenge .small{font-size:12px;color:#777;font-weight:800}.challenge .big{font-size:24px;font-weight:950;margin-top:4px}
-.target{display:inline-block;background:#fff;border-radius:13px;padding:5px 11px;color:#6658d8}
-.question{font-size:17px;font-weight:900;margin-top:12px}.drop{height:82px;border:3px dashed #b9b5cc;border-radius:18px;display:flex;align-items:center;justify-content:center;background:#fafaff;color:#777;margin-top:10px;transition:.15s}.drop.over{border-color:#25bdb4;background:#e8fffb;transform:scale(1.02)}.drop strong{font-size:21px;color:#302b54}
-.symbols{display:flex;justify-content:center;gap:9px;margin-top:12px}.sym{width:82px;height:70px;border:0;border-radius:20px;color:#fff;font-size:37px;font-weight:950;touch-action:none;user-select:none;box-shadow:0 6px 12px #0002}.sym small{display:block;font-size:9px;margin-top:-3px}.sharp{background:#24b9b1}.flat{background:#ee6a82}.natural{background:#efa92a}
-.message{text-align:center;min-height:25px;margin-top:10px;font-weight:900;font-size:14px}.good{color:#16865d}.bad{color:#d34a61}
-.actions{display:flex;gap:8px;margin-top:8px}.actions button{flex:1;border:0;border-radius:14px;padding:12px;font-weight:900;font-size:14px}.listen{background:#e9f8f6;color:#167c76}.next{background:#292450;color:#fff}
-.noteView{text-align:center;margin-top:13px}.note{font-size:62px;font-weight:950;line-height:1}.noteSub{font-size:12px;color:#777;font-weight:800}
-.keyboardWrap{margin-top:13px;overflow:hidden;border-radius:16px;background:#ececf3;padding:9px 6px 6px}.keyboard{position:relative;height:116px;display:flex}.key{position:relative;flex:1;background:#fff;border:1px solid #bbb;border-radius:0 0 8px 8px;height:100%;display:flex;align-items:flex-end;justify-content:center;padding-bottom:7px;font-weight:800;color:#555;touch-action:manipulation}.key.active{background:#dff9f6;border:3px solid #25bdb4;color:#187c76}.black{position:absolute;top:0;width:11%;height:67px;background:#292450;color:#fff;border-radius:0 0 5px 5px;z-index:2;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;font-size:10px}.k1{left:9.5%}.k2{left:23.8%}.k3{left:52.4%}.k4{left:66.7%}.k5{left:81%}
-.levels{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:11px}.level{border:0;border-radius:12px;padding:9px 2px;background:#eeeaf9;color:#49416e;font-weight:900}.level.on{background:#25bdb4;color:#fff}.level.lock{opacity:.45}
-.rule{display:flex;gap:9px;margin-top:9px}.rule div{flex:1;text-align:center;padding:10px 5px;border-radius:14px;background:#f7f6fb;font-size:12px;font-weight:800}.rule b{display:block;font-size:23px}
-.tip{font-size:12px;line-height:1.55;color:#5c5872;margin-top:10px;text-align:center}
-.dragGhost{position:fixed;z-index:99;pointer-events:none;width:82px;height:70px;border-radius:20px;display:grid;place-items:center;color:#fff;font-size:37px;font-weight:950;box-shadow:0 12px 25px #0003;transform:translate(-50%,-50%) scale(1.05)}
-.toast{position:fixed;left:50%;top:18px;transform:translateX(-50%);background:#292450;color:#fff;padding:11px 15px;border-radius:15px;font-weight:800;opacity:0;transition:.2s;z-index:200;white-space:nowrap;max-width:92%;text-align:center}
-.toast.show{opacity:1}
-.hidden{display:none}
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:linear-gradient(180deg,#f2efff 0%,#fff 55%,#f7f8ff 100%);
+  color:#29254f;min-height:100vh;
+}
+.wrap{max-width:720px;margin:auto;padding:24px 18px 48px}
+.hero{
+  background:linear-gradient(135deg,#7661e8,#9d83ee);
+  color:white;border-radius:34px;padding:28px 22px 24px;
+  text-align:center;box-shadow:0 18px 40px rgba(105,85,210,.22);
+}
+.logo{font-size:52px;font-weight:900;letter-spacing:-2px}
+.logo span:first-child{color:#5de0ef}.logo span:last-child{color:#ffb04d}
+.subtitle{font-size:22px;margin-top:4px}
+.cards{display:flex;gap:12px;margin-top:22px}
+.card{
+  flex:1;border:1px solid rgba(255,255,255,.35);
+  background:rgba(255,255,255,.16);border-radius:20px;padding:10px 6px;
+}
+.card b{display:block;font-size:29px;margin-top:3px}
+.card small{font-size:15px}
+.panel{
+  margin-top:24px;background:white;border-radius:32px;padding:25px 22px;
+  box-shadow:0 10px 35px rgba(48,43,96,.12);
+}
+.panelhead{display:flex;justify-content:space-between;align-items:center}
+h2{font-size:28px;margin:0}
+.badge{background:#eeeaff;border-radius:22px;padding:12px 20px;font-weight:700}
+.help{text-align:center;color:#777;margin:18px 0 5px;font-size:18px}
+.note{text-align:center;font-size:92px;font-weight:900;line-height:1;margin:8px 0 15px}
+.speaker{
+  display:block;margin:-4px auto 16px;border:0;border-radius:20px;
+  width:74px;height:74px;font-size:38px;background:#2bb8b4;color:white;
+}
+.notes{display:flex;gap:8px;justify-content:center}
+.notes button{
+  flex:1;max-width:82px;background:white;border:2px solid #ddd;
+  border-radius:18px;padding:17px 8px;font-size:25px;font-weight:800;color:#302a58;
+}
+.notes button.active{border-color:#36bbb7;background:#effdfc}
+.instruction{text-align:center;font-size:21px;font-weight:700;margin:26px 0 18px}
+.drop{
+  min-height:128px;border:4px dashed #c1bed2;border-radius:28px;
+  display:flex;align-items:center;justify-content:center;
+  color:#8b8899;font-size:20px;background:#faf9ff;
+}
+.acc{display:flex;gap:16px;justify-content:center;margin-top:20px}
+.acc button{
+  border:0;border-radius:25px;color:white;width:31%;min-height:120px;
+  font-size:48px;font-weight:900;box-shadow:0 8px 18px rgba(0,0,0,.12)
+}
+.acc small{display:block;font-size:14px;font-weight:600}
+.sharp{background:#2bb8b4}.flat{background:#ef6480}.natural{background:#f3ad2d}
+.tip{margin-top:22px;background:#f5f2ff;border-radius:20px;padding:16px;font-size:17px;line-height:1.55}
+.nav{display:flex;gap:12px;margin-top:22px}
+.nav button{flex:1;border:0;border-radius:18px;padding:15px;font-size:18px;font-weight:800}
+.prev{background:#eeeef5}.next{background:#7562e7;color:white}
+.footer{text-align:center;color:#888;margin-top:25px;font-size:14px}
 </style>
 </head>
 <body>
-<div class="app">
-<div class="hero">
-  <div class="logo"><span>ALTER</span> <b>NOTE</b> 🎵</div>
-  <div class="sub">เกมฝึกเครื่องหมายแปลงเสียง • V3</div>
-  <div class="scorebar">
-    <div class="scorepill">⭐ คะแนน<b id="score">0</b></div>
-    <div class="scorepill">🔥 Combo<b id="combo">0</b></div>
-    <div class="scorepill">🎯 ด่าน<b id="levelNo">1</b></div>
-  </div>
-  <div class="progress"><i id="progress"></i></div>
-</div>
+<div class="wrap">
+  <section class="hero">
+    <div class="logo"><span>ALTER</span> <span>NOTE</span></div>
+    <div class="subtitle">บทเรียนเครื่องหมายแปลงเสียง • โหมดเรียนรู้</div>
+    <div class="cards">
+      <div class="card">📖<small>บทเรียน</small><b id="lessonNo">1</b></div>
+      <div class="card">🎵<small>โน้ต</small><b id="noteNo">1/7</b></div>
+      <div class="card">🎯<small>เป้าหมาย</small><b>จำให้ได้</b></div>
+    </div>
+  </section>
 
-<div class="card">
-  <div class="title"><span>🎯 ภารกิจ</span><span class="badge" id="taskNo">ข้อ 1 / 5</span></div>
-  <div class="challenge">
-    <div class="small">โจทย์ของคุณ</div>
-    <div class="big">เปลี่ยน <span class="target" id="from">C</span> → <span class="target" id="to">C♯</span></div>
-    <div class="question" id="question">ลากเครื่องหมายที่ถูกต้องใส่ช่อง</div>
-    <div class="drop" id="drop"><strong>วาง ♯ ♭ ♮ ตรงนี้</strong></div>
-    <div class="symbols">
-      <button class="sym sharp" data-symbol="sharp">♯<small>สูงขึ้น ½ เสียง</small></button>
-      <button class="sym flat" data-symbol="flat">♭<small>ต่ำลง ½ เสียง</small></button>
-      <button class="sym natural" data-symbol="natural">♮<small>คืนเสียงเดิม</small></button>
+  <section class="panel">
+    <div class="panelhead">
+      <h2>🎵 โหมดเรียนรู้</h2>
+      <div class="badge">ลากแล้วฟัง</div>
     </div>
-    <div class="message" id="message"></div>
-    <div class="actions">
-      <button class="listen" id="listen">🔊 ฟังเสียงเป้าหมาย</button>
-      <button class="next hidden" id="next">ข้อถัดไป →</button>
-    </div>
-  </div>
-  <div class="noteView">
-    <div class="note" id="currentNote">C</div>
-    <div class="noteSub">เสียงปัจจุบัน</div>
-  </div>
-  <div class="keyboardWrap">
-    <div style="text-align:center;font-size:11px;color:#777;font-weight:800;margin-bottom:6px">🎹 ตำแหน่งเสียงโดยประมาณ</div>
-    <div class="keyboard">
-      <button class="key" data-k="C">C</button><button class="key" data-k="D">D</button><button class="key" data-k="E">E</button>
-      <button class="key" data-k="F">F</button><button class="key" data-k="G">G</button><button class="key" data-k="A">A</button><button class="key" data-k="B">B</button>
-      <div class="black k1">C♯</div><div class="black k2">D♯</div><div class="black k3">F♯</div><div class="black k4">G♯</div><div class="black k5">A♯</div>
-    </div>
-  </div>
-</div>
+    <div class="help">เลือกโน้ตตั้งต้น</div>
+    <div class="note" id="bigNote">C</div>
+    <button class="speaker" id="speaker">🔊</button>
 
-<div class="card">
-  <div class="title"><span>🏆 ด่านการเรียนรู้</span><span class="badge">ผ่าน 4 / 5 = ด่านถัดไป</span></div>
-  <div class="levels" id="levels"></div>
-  <div class="rule">
-    <div><b>♯</b>สูงขึ้นครึ่งเสียง</div>
-    <div><b>♭</b>ต่ำลงครึ่งเสียง</div>
-    <div><b>♮</b>คืนเสียงเดิม</div>
-  </div>
-  <div class="tip">ตอบถูกต่อเนื่องจะได้ Combo และคะแนนเพิ่ม เหมาะสำหรับใช้เป็นกิจกรรมในชั้นเรียน</div>
+    <div class="notes">
+      <button class="active" data-note="C">C</button>
+      <button data-note="D">D</button>
+      <button data-note="E">E</button>
+      <button data-note="F">F</button>
+      <button data-note="G">G</button>
+      <button data-note="A">A</button>
+      <button data-note="B">B</button>
+    </div>
+
+    <div class="instruction">ลาก # ♭ หรือ ♮ ใส่ช่อง</div>
+    <div class="drop" id="drop">วางเครื่องหมายตรงนี้</div>
+
+    <div class="acc">
+      <button class="sharp" draggable="true" data-acc="#">#<small>ชาร์ป +½ เสียง</small></button>
+      <button class="flat" draggable="true" data-acc="b">♭<small>แฟลต −½ เสียง</small></button>
+      <button class="natural" draggable="true" data-acc="♮">♮<small>คืนเสียงเดิม</small></button>
+    </div>
+
+    <div class="tip">
+      💡 <b>จำง่าย ๆ</b><br>
+      # ชาร์ป = สูงขึ้นครึ่งเสียง &nbsp;•&nbsp;
+      ♭ แฟลต = ต่ำลงครึ่งเสียง &nbsp;•&nbsp;
+      ♮ เนเชอรัล = คืนเสียงเดิม
+    </div>
+
+    <div class="nav">
+      <button class="prev" id="prev">← ก่อนหน้า</button>
+      <button class="next" id="next">บทถัดไป →</button>
+    </div>
+  </section>
+  <div class="footer">ALTER NOTE • บทเรียนสำหรับการเรียนรู้เครื่องหมายแปลงเสียง</div>
 </div>
-<div style="text-align:center;margin-top:12px"><button id="reset" style="border:0;border-radius:13px;padding:10px 16px;background:#eeeaf9;color:#49416e;font-weight:900">เริ่มเกมใหม่</button></div>
-</div>
-<div class="toast" id="toast"></div>
 
 <script>
-const F={C:261.6256,"C#":277.1826,Db:277.1826,D:293.6648,"D#":311.127,Eb:311.127,E:329.6276,F:349.2282,"F#":369.9944,Gb:369.9944,G:391.9954,"G#":415.3047,Ab:415.3047,A:440,"A#":466.1638,Bb:466.1638,B:493.8833};
-const naturals=["C","D","E","F","G","A","B"];
-let audioCtx=null,score=0,combo=0,level=1,questionNo=1,correctThisLevel=0,answered=false,current="C",targetSymbol="sharp",taskNote="C";
+const noteNames=["C","D","E","F","G","A","B"];
+let index=0, acc="";
+const big=document.getElementById("bigNote");
+const drop=document.getElementById("drop");
+const noteNo=document.getElementById("noteNo");
 
-function $(id){return document.getElementById(id)}
-function unlock(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx.state==="suspended"?audioCtx.resume():Promise.resolve()}
-function targetName(n,s){if(s==="sharp")return n==="E"?"F":n==="B"?"C":n+"#";if(s==="flat")return n==="C"?"B":n==="F"?"E":n==="D"?"Db":n==="G"?"Gb":n==="A"?"Ab":n==="B"?"Bb":"Eb";return n}
-function play(name){unlock().then(()=>{let o=audioCtx.createOscillator(),g=audioCtx.createGain(),t=audioCtx.currentTime;o.type="triangle";o.frequency.value=F[name]||F.C;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.28,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.7);o.connect(g);g.connect(audioCtx.destination);o.start(t);o.stop(t+.75)})}
-function toast(t){let x=$("toast");x.textContent=t;x.classList.add("show");clearTimeout(window.tm);window.tm=setTimeout(()=>x.classList.remove("show"),1300)}
-function renderLevels(){let b=$("levels");b.innerHTML="";for(let i=1;i<=10;i++){let x=document.createElement("button");x.className="level"+(i===level?" on":"")+(i>level?" lock":"");x.textContent=i;x.onclick=()=>{if(i<=level){level=i;correctThisLevel=0;questionNo=1;newTask()}};b.appendChild(x)}}
-function newTask(){
- answered=false;$("next").classList.add("hidden");$("message").textContent="";$("message").className="message";
- taskNote=naturals[Math.floor(Math.random()*naturals.length)];
- targetSymbol=Math.random()<.5?"sharp":"flat";
- $("from").textContent=taskNote;$("to").textContent=taskNote+(targetSymbol==="sharp"?"♯":"♭");
- $("taskNo").textContent=`ข้อ ${questionNo} / 5`;
- $("levelNo").textContent=level;$("progress").style.width=((questionNo-1)/5*100)+"%";
- current=taskNote;$("currentNote").textContent=current;
- document.querySelectorAll(".key").forEach(k=>k.classList.toggle("active",k.dataset.k===current));
+function render(){
+  big.textContent=noteNames[index]+(acc==="#"?"#":acc==="b"?"♭":acc==="♮"?"♮":"");
+  noteNo.textContent=(index+1)+"/7";
+  document.querySelectorAll(".notes button").forEach(b=>b.classList.toggle("active",b.dataset.note===noteNames[index]));
 }
-function answer(sym){
- if(answered)return;
- answered=true;let right=sym===targetSymbol;
- if(right){
-   let pts=10+Math.min(combo,5)*2+level*2;score+=pts;combo++;correctThisLevel++;
-   $("score").textContent=score;$("combo").textContent=combo;
-   $("message").textContent=`✅ ถูกต้อง! ${taskNote} → ${taskNote}${targetSymbol==="sharp"?"♯":"♭"}  +${pts} คะแนน`;
-   $("message").className="message good";current=targetName(taskNote,targetSymbol);$("currentNote").textContent=current;play(current);
-   $("next").classList.remove("hidden");$("progress").style.width=(questionNo/5*100)+"%";toast("เก่งมากครับ 🎉");
- }else{
-   combo=0;$("combo").textContent=0;
-   $("message").textContent="❌ ยังไม่ถูก — ♯ ทำให้สูงขึ้น / ♭ ทำให้ต่ำลง";
-   $("message").className="message bad";answered=false;toast("ลองอีกครั้งครับ");
- }
-}
-$("listen").onclick=()=>play(targetName(taskNote,targetSymbol));
-$("next").onclick=()=>{
- if(questionNo>=5){
-   if(correctThisLevel>=4 && level<10){level++;correctThisLevel=0;toast(`🎉 ผ่านด่าน! ไปด่าน ${level}`)}
-   else {toast(correctThisLevel>=4?"🏆 สุดยอด!":"ฝึกอีกนิด แล้วลองด่านนี้ใหม่")}
-   questionNo=1;
- }else questionNo++;
- newTask();renderLevels();
-};
-$("reset").onclick=()=>{score=0;combo=0;level=1;questionNo=1;correctThisLevel=0;$("score").textContent=0;$("combo").textContent=0;newTask();renderLevels();toast("เริ่มเกมใหม่แล้วครับ")};
-
-document.querySelectorAll(".key").forEach(k=>k.onclick=()=>{current=k.dataset.k;$("currentNote").textContent=current;play(current);document.querySelectorAll(".key").forEach(x=>x.classList.toggle("active",x===k))});
-
-const drop=$("drop");
-document.querySelectorAll(".sym").forEach(btn=>{
- btn.addEventListener("pointerdown",ev=>{
-  ev.preventDefault();let sym=btn.dataset.symbol,g=document.createElement("div");g.className="dragGhost";g.textContent=sym==="sharp"?"♯":sym==="flat"?"♭":"♮";g.style.background=getComputedStyle(btn).background;document.body.appendChild(g);
-  const move=e=>{g.style.left=e.clientX+"px";g.style.top=e.clientY+"px";let r=drop.getBoundingClientRect();drop.classList.toggle("over",e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom)};
-  const end=e=>{document.removeEventListener("pointermove",move);document.removeEventListener("pointerup",end);let r=drop.getBoundingClientRect(),ok=e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom;g.remove();drop.classList.remove("over");if(ok)answer(sym);else toast("ลากมาวางในช่องครับ")};
-  document.addEventListener("pointermove",move,{passive:false});document.addEventListener("pointerup",end);move(ev);
- });
+document.querySelectorAll(".notes button").forEach(b=>b.onclick=()=>{
+  index=noteNames.indexOf(b.dataset.note); acc=""; render();
 });
-newTask();renderLevels();
+document.querySelectorAll(".acc button").forEach(b=>{
+  b.addEventListener("dragstart",e=>e.dataTransfer.setData("text/plain",b.dataset.acc));
+  b.onclick=()=>{acc=b.dataset.acc;render();};
+});
+drop.addEventListener("dragover",e=>e.preventDefault());
+drop.addEventListener("drop",e=>{e.preventDefault();acc=e.dataTransfer.getData("text/plain");render();});
+document.getElementById("prev").onclick=()=>{index=(index+6)%7;acc="";render()};
+document.getElementById("next").onclick=()=>{index=(index+1)%7;acc="";render()};
+
+let ctx;
+const freq={C:261.63,D:293.66,E:329.63,F:349.23,G:392,A:440,B:493.88};
+function play(){
+  ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();
+  if(ctx.state==="suspended")ctx.resume();
+  let sem=acc==="#"?1:acc==="b"?-1:0;
+  let o=ctx.createOscillator(), g=ctx.createGain();
+  o.type="sine";o.frequency.value=freq[noteNames[index]]*Math.pow(2,sem/12);
+  g.gain.setValueAtTime(.001,ctx.currentTime);
+  g.gain.exponentialRampToValueAtTime(.25,ctx.currentTime+.02);
+  g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.8);
+  o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+.85);
+}
+document.getElementById("speaker").onclick=play;
+render();
 </script>
 </body>
 </html>
