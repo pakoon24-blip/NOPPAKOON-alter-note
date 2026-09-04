@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>ALTER NOTE • V2</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:linear-gradient(145deg,#eee9ff,#dcf8f5);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans Thai","Segoe UI",sans-serif;color:#292450;overscroll-behavior:none}
+.app{max-width:430px;min-height:100vh;margin:auto;padding:14px 14px 34px}
+.hero{background:linear-gradient(145deg,#7569df,#ad98f4);color:#fff;border-radius:28px;padding:20px 18px;text-align:center;box-shadow:0 12px 30px #4b3c9b25}
+.logo{font-size:36px;font-weight:900;letter-spacing:-2px}.logo span{color:#77dfff}.logo b{color:#ffb35d}
+.sub{margin-top:5px;font-weight:700;opacity:.95}
+.scorebar{display:flex;justify-content:space-between;gap:8px;margin-top:12px}
+.scorepill{flex:1;background:#ffffff25;border:1px solid #ffffff35;border-radius:15px;padding:8px 6px;font-size:12px}.scorepill b{display:block;font-size:20px}
+.card{background:#fff;border-radius:25px;padding:17px;margin-top:13px;box-shadow:0 8px 25px #423a7b15}
+.label{text-align:center;color:#777;font-size:13px;font-weight:700}
+.noteBox{display:flex;justify-content:center;align-items:center;gap:13px;margin:7px 0 12px}
+.note{font-size:78px;line-height:1;font-weight:900;min-width:145px;text-align:center}
+.speaker{width:54px;height:54px;border:0;border-radius:17px;background:#25bdb4;color:#fff;font-size:25px;touch-action:manipulation}
+.notes{display:flex;gap:5px;margin-bottom:14px}
+.notes button{flex:1;padding:10px 2px;border-radius:11px;border:1px solid #ddd;background:#fff;font-size:18px;font-weight:800;color:#302b54}
+.notes button.active{border:2px solid #25bdb4;background:#e7fbf8}
+.instruction{text-align:center;font-weight:900;margin:5px 0 10px}
+.drop{height:86px;border:3px dashed #b9b5cc;border-radius:19px;display:flex;justify-content:center;align-items:center;background:#fafaff;color:#777;transition:.15s;position:relative}
+.drop.over{border-color:#25bdb4;background:#e8fffb;transform:scale(1.02)}
+.drop strong{font-size:21px;color:#302b54}
+.symbols{display:flex;justify-content:center;gap:10px;margin-top:13px}
+.sym{width:78px;height:74px;border:0;border-radius:21px;color:#fff;font-size:38px;font-weight:900;box-shadow:0 6px 12px #0002;touch-action:none;user-select:none}
+.sym small{display:block;font-size:10px;margin-top:-4px}.sharp{background:#24b9b1}.flat{background:#ee6a82}.natural{background:#efa92a}
+.history{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:15px;font-size:21px}
+.bubble{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;border:1px solid #ddd;background:#f8f8fc;font-weight:900}
+.bubble.active{background:#25bdb4;color:#fff;border-color:#25bdb4}
+.result{text-align:center;margin-top:10px;font-size:14px;color:#555;min-height:21px;font-weight:700}
+.keyboardWrap{margin-top:14px;overflow:hidden;border-radius:16px;background:#ececf3;padding:10px 7px 7px}
+.keyboard{position:relative;height:125px;display:flex}
+.key{position:relative;flex:1;background:#fff;border:1px solid #bbb;border-radius:0 0 9px 9px;height:100%;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;font-weight:800;color:#555;touch-action:manipulation}
+.key.active{background:#dff9f6;border:3px solid #25bdb4;color:#187c76}
+.black{position:absolute;top:0;width:11%;height:72px;background:#292450;color:#fff;border-radius:0 0 6px 6px;z-index:2;display:flex;align-items:flex-end;justify-content:center;padding-bottom:5px;font-size:11px}
+.k1{left:9.5%}.k2{left:23.8%}.k3{left:52.4%}.k4{left:66.7%}.k5{left:81%}
+.modeTitle{display:flex;justify-content:space-between;align-items:center}.modeTitle b{font-size:18px}.badge{font-size:11px;background:#f0ecff;padding:6px 9px;border-radius:999px}
+.challenge{background:#fff8d8;border-radius:17px;padding:13px;margin-top:12px;text-align:center}
+.challenge strong{font-size:24px}.choices{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.choice{border:0;border-radius:13px;background:#f1effa;padding:12px;font-weight:900;font-size:17px;color:#302b54}
+.choice.correct{background:#d9f7e8}.choice.wrong{background:#ffe1e7}
+.primary{width:100%;border:0;border-radius:15px;padding:13px;background:#292450;color:#fff;font-weight:900;font-size:15px;margin-top:10px}
+.secondary{border:0;background:#eeeaf9;border-radius:13px;padding:10px 15px;color:#413b68;font-weight:800}
+.tip{background:#fff;border-radius:18px;padding:13px;margin-top:13px;font-size:13px;line-height:1.5;box-shadow:0 5px 18px #423a7b10}
+.dragGhost{position:fixed;z-index:99;pointer-events:none;width:78px;height:74px;border-radius:21px;display:grid;place-items:center;color:#fff;font-size:38px;font-weight:900;box-shadow:0 12px 25px #0003;transform:translate(-50%,-50%) scale(1.05)}
+.toast{position:fixed;left:50%;top:18px;transform:translateX(-50%);background:#292450;color:#fff;padding:11px 15px;border-radius:15px;font-weight:800;opacity:0;transition:.2s;z-index:200;white-space:nowrap;max-width:92%;text-align:center}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="hero">
+    <div class="logo"><span>ALTER</span> <b>NOTE</b></div>
+    <div class="sub">เกมเรียนรู้เครื่องหมายแปลงเสียง • V2</div>
+    <div class="scorebar">
+      <div class="scorepill">⭐ คะแนน<b id="score">0</b></div>
+      <div class="scorepill">🔥 Combo<b id="combo">0</b></div>
+      <div class="scorepill">🎯 ข้อ<b id="count">0</b></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="modeTitle"><b>🎵 โหมดเรียนรู้</b><span class="badge">ลากแล้วฟัง</span></div>
+    <div class="label" style="margin-top:10px">เลือกโน้ตตั้งต้น</div>
+    <div class="noteBox">
+      <div class="note" id="note">C</div>
+      <button class="speaker" id="speaker" aria-label="เล่นเสียง">🔊</button>
+    </div>
+    <div class="notes" id="notes"></div>
+
+    <div class="instruction">ลาก ♯ ♭ หรือ ♮ ใส่ช่อง</div>
+    <div class="drop" id="drop"><span>วางเครื่องหมายตรงนี้</span></div>
+    <div class="symbols">
+      <button class="sym sharp" data-symbol="sharp">♯<small>ชาร์ป +½ เสียง</small></button>
+      <button class="sym flat" data-symbol="flat">♭<small>แฟลต −½ เสียง</small></button>
+      <button class="sym natural" data-symbol="natural">♮<small>คืนเสียงเดิม</small></button>
+    </div>
+
+    <div class="history"><div class="bubble" id="before">C</div><b>→</b><div class="bubble active" id="after">C</div></div>
+    <div class="result" id="result">ลากเครื่องหมาย แล้วระบบจะเล่นเสียงให้ทันที</div>
+
+    <div class="keyboardWrap">
+      <div class="label">คีย์เปียโนช่วยให้เห็นตำแหน่งเสียง</div>
+      <div class="keyboard">
+        <button class="key" data-k="C">C</button><button class="key" data-k="D">D</button>
+        <button class="key" data-k="E">E</button><button class="key" data-k="F">F</button>
+        <button class="key" data-k="G">G</button><button class="key" data-k="A">A</button>
+        <button class="key" data-k="B">B</button>
+        <div class="black k1">C♯</div><div class="black k2">D♯</div><div class="black k3">F♯</div><div class="black k4">G♯</div><div class="black k5">A♯</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="modeTitle"><b>🎯 ภารกิจสั้น</b><span class="badge">ฝึกตอบ</span></div>
+    <div class="challenge">
+      เปลี่ยน <strong id="task">C</strong> ให้เป็น <strong id="target">C♯</strong>
+      <div class="choices">
+        <button class="choice" data-choice="sharp">♯ ชาร์ป</button>
+        <button class="choice" data-choice="flat">♭ แฟลต</button>
+        <button class="choice" data-choice="natural">♮ เนเจอรัล</button>
+        <button class="choice" data-choice="replay">🔊 ฟังเสียง</button>
+      </div>
+      <div id="challengeMsg" style="margin-top:8px;font-size:13px;font-weight:800;min-height:18px"></div>
+    </div>
+    <button class="primary" id="nextTask">ภารกิจใหม่ →</button>
+  </div>
+
+  <div class="tip">
+    <b>💡 เรียนรู้จากการลงมือทำ</b><br>
+    ♯ ทำให้เสียงสูงขึ้นครึ่งเสียง • ♭ ทำให้เสียงต่ำลงครึ่งเสียง • ♮ ใช้ยกเลิกเครื่องหมายแปลงเสียงในบริบทของโน้ต
+  </div>
+  <div style="text-align:center;margin-top:13px"><button class="secondary" id="reset">เริ่มคะแนนใหม่</button></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const F={
+"C":261.6256,"C#":277.1826,"Db":277.1826,"Cb":246.9417,"B#":261.6256,
+"D":293.6648,"D#":311.1270,"Eb":311.1270,
+"E":329.6276,"E#":349.2282,"Fb":311.1270,
+"F":349.2282,"F#":369.9944,"Gb":369.9944,
+"G":391.9954,"G#":415.3047,"Ab":415.3047,
+"A":440,"A#":466.1638,"Bb":466.1638,"B":493.8833
+};
+const natural=["C","D","E","F","G","A","B"];
+let current="C",symbol="",score=0,count=0,combo=0,audioCtx=null;
+let taskNote="C",taskSymbol="sharp";
+
+const $=id=>document.getElementById(id);
+function unlockAudio(){
+  if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+  return audioCtx.state==="suspended"?audioCtx.resume():Promise.resolve();
+}
+function audioName(n=current,s=symbol){
+  if(s==="sharp") return n==="E"?"F":n==="B"?"C":n+"#";
+  if(s==="flat") return n==="C"?"B":n==="F"?"E":n==="D"?"Db":n==="G"?"Gb":n==="A"?"Ab":n==="B"?"Bb":"Eb";
+  return n;
+}
+function play(note=audioName()){
+  unlockAudio().then(()=>{
+    const now=audioCtx.currentTime,o=audioCtx.createOscillator(),g=audioCtx.createGain();
+    o.type="triangle";o.frequency.setValueAtTime(F[note]||F.C,now);
+    g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(.30,now+.025);g.gain.exponentialRampToValueAtTime(.0001,now+.75);
+    o.connect(g);g.connect(audioCtx.destination);o.start(now);o.stop(now+.8);
+  }).catch(()=>toast("แตะ 🔊 เพื่อเปิดเสียงครับ"));
+}
+function noteName(){return symbol==="sharp"?current+"♯":symbol==="flat"?current+"♭":current}
+function renderNotes(){
+  const box=$("notes");box.innerHTML="";
+  natural.forEach(n=>{const b=document.createElement("button");b.textContent=n;if(n===current)b.classList.add("active");b.onclick=()=>{current=n;symbol="";render();play()};box.appendChild(b)});
+}
+function render(){
+  $("note").textContent=noteName();$("before").textContent=current;$("after").textContent=noteName();
+  $("result").textContent=symbol?`เสียง ${noteName()} • แตะ 🔊 เพื่อฟังซ้ำ`:"ลากเครื่องหมาย แล้วระบบจะเล่นเสียงให้ทันที";
+  document.querySelectorAll(".key").forEach(k=>k.classList.toggle("active",k.dataset.k===current));
+  renderNotes();
+}
+function toast(t){const x=$("toast");x.textContent=t;x.classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>x.classList.remove("show"),1400)}
+function apply(sym){
+  if(sym==="natural"){symbol="";toast("คืนเป็นเสียงเดิม ♮");}
+  else{symbol=sym;score+=10;combo++;count++;$("score").textContent=score;$("combo").textContent=combo;$("count").textContent=count;toast(`ได้ ${noteName()} • +10 ⭐`)}
+  render();play();
+}
+$("speaker").onclick=()=>play();
+$("reset").onclick=()=>{score=0;count=0;combo=0;$("score").textContent=0;$("count").textContent=0;$("combo").textContent=0;toast("เริ่มคะแนนใหม่แล้วครับ")};
+
+const drop=$("drop");
+document.querySelectorAll(".sym").forEach(btn=>{
+  btn.addEventListener("pointerdown",ev=>{
+    ev.preventDefault();const sym=btn.dataset.symbol;
+    const ghost=document.createElement("div");ghost.className="dragGhost";ghost.textContent=sym==="sharp"?"♯":sym==="flat"?"♭":"♮";ghost.style.background=getComputedStyle(btn).background;document.body.appendChild(ghost);
+    const move=e=>{ghost.style.left=e.clientX+"px";ghost.style.top=e.clientY+"px";const r=drop.getBoundingClientRect();drop.classList.toggle("over",e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom)};
+    const end=e=>{document.removeEventListener("pointermove",move);document.removeEventListener("pointerup",end);const r=drop.getBoundingClientRect();const over=e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom;ghost.remove();drop.classList.remove("over");if(over)apply(sym);else toast("วางในช่องเส้นประครับ")};
+    document.addEventListener("pointermove",move,{passive:false});document.addEventListener("pointerup",end);move(ev);
+  });
+});
+
+function newTask(){
+  taskNote=natural[Math.floor(Math.random()*natural.length)];
+  taskSymbol=["sharp","flat"][Math.floor(Math.random()*2)];
+  const glyph=taskSymbol==="sharp"?"♯":"♭";
+  $("task").textContent=taskNote;$("target").textContent=taskNote+glyph;$("challengeMsg").textContent="";
+  document.querySelectorAll(".choice").forEach(x=>x.classList.remove("correct","wrong"));
+}
+function checkTask(choice){
+  if(choice==="replay"){const oldC=current,oldS=symbol;play(audioName(taskNote,taskSymbol));return}
+  if(choice===taskSymbol){score+=20;combo++;count++;$("score").textContent=score;$("combo").textContent=combo;$("count").textContent=count;$("challengeMsg").textContent="✅ ถูกต้อง! +20 คะแนน";toast("เก่งมากครับ 🎉");document.querySelector(`[data-choice="${choice}"]`).classList.add("correct");play(audioName(taskNote,taskSymbol))}
+  else{combo=0;$("combo").textContent=0;$("challengeMsg").textContent="❌ ยังไม่ใช่ ลองคิดว่าเสียงต้องสูงขึ้นหรือต่ำลง";document.querySelector(`[data-choice="${choice}"]`).classList.add("wrong");}
+}
+document.querySelectorAll(".choice").forEach(b=>b.onclick=()=>checkTask(b.dataset.choice));
+$("nextTask").onclick=newTask;
+newTask();render();
+</script>
+</body>
+</html>
